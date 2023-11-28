@@ -47,24 +47,3 @@ class DataSchema:
                 "ChurnDate": "string"
             }
         }
-
-# customer_data = {
-#     "CustomerID": "123",
-#     "Age": 30,
-#     "Gender": "Male",
-#     "Location": "CityA",
-#     "ServiceUsage": {
-#         "Duration": 50,
-#         "NumCalls": 100,
-#         "NumMessages": 20,
-#         "DataUsage": 2.5
-#     },
-#     "BillingInfo": {
-#         "MonthlyCharges": 50.0,
-#         "PaymentMethod": "CreditCard"
-#     },
-#     "ChurnStatus": {
-#         "Churned": False,
-#         "ChurnDate": ""
-#     }
-# }
