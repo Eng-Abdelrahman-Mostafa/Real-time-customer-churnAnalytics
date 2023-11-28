@@ -45,10 +45,7 @@ parsed_df = kafka_df.selectExpr("CAST(value AS STRING)")\
     .select("data.*")
 
 # Display the DataFrame
-gender_counts = parsed_df.groupBy("Gender").count()
+parsed_df.printSchema()
 
-# Write the results to the console
-query = gender_counts.writeStream.outputMode("complete").format("console").start()
+#هنكمل
 
-# Wait for the termination of the query
-query.awaitTermination()
