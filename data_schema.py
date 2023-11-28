@@ -1,9 +1,10 @@
 import random
 
-class DataFactory:
+class DataSchema:
     # Function to generate random customer data
     @staticmethod
     def generate_random_data():
+        Churned = random.choice([True, False])
         return {
             "CustomerID": str(random.randint(1000, 9999)),
             "Age": random.randint(18, 60),
@@ -20,11 +21,32 @@ class DataFactory:
                 "PaymentMethod": random.choice(["CreditCard", "PayPal", "BankTransfer"])
             },
             "ChurnStatus": {
-                "Churned": random.choice([True, False]),
-                "ChurnDate": ""
+                "Churned": Churned,
+                "ChurnDate": str(random.randint(1, 30)) + "-11-2023" if Churned else ""
             }
         }
-    
+    @staticmethod
+    def schema():
+        return {
+            "CustomerID": "string",
+            "Age": "integer",
+            "Gender": "string",
+            "Location": "string",
+            "ServiceUsage": {
+                "Duration": "integer",
+                "NumCalls": "integer",
+                "NumMessages": "integer",
+                "DataUsage": "double"
+            },
+            "BillingInfo": {
+                "MonthlyCharges": "double",
+                "PaymentMethod": "string"
+            },
+            "ChurnStatus": {
+                "Churned": "boolean",
+                "ChurnDate": "string"
+            }
+        }
 
 # customer_data = {
 #     "CustomerID": "123",
