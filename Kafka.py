@@ -23,7 +23,7 @@ class Kafka:
     consumer_conf = {
     'bootstrap.servers': 'localhost:9092',
     'group.id': 'my-consumer-group',
-    'auto.offset.reset': 'earliest'
+    'auto.offset.reset': 'latest'
     }
     # Create Kafka consumer instance
     consumer = Consumer(consumer_conf)

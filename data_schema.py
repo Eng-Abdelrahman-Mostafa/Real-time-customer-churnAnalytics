@@ -25,25 +25,4 @@ class DataSchema:
                 "ChurnDate": str(random.randint(1, 30)) + "-11-2023" if Churned else ""
             }
         }
-    @staticmethod
-    def schema():
-        return {
-            "CustomerID": "string",
-            "Age": "integer",
-            "Gender": "string",
-            "Location": "string",
-            "ServiceUsage": {
-                "Duration": "integer",
-                "NumCalls": "integer",
-                "NumMessages": "integer",
-                "DataUsage": "double"
-            },
-            "BillingInfo": {
-                "MonthlyCharges": "double",
-                "PaymentMethod": "string"
-            },
-            "ChurnStatus": {
-                "Churned": "boolean",
-                "ChurnDate": "string"
-            }
-        }
+   
