@@ -1,6 +1,6 @@
 import random
 
-class DataSchema:
+class DataFaker:
     # Function to generate random customer data
     @staticmethod
     def generate_random_data():
