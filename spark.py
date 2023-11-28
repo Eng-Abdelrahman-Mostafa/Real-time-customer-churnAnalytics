@@ -14,8 +14,9 @@ spark = SparkSession.builder\
 kafka_df = spark.readStream.format("kafka")\
     .option("kafka.bootstrap.servers", "localhost:9092")\
     .option("subscribe", "customer-info-topic")\
-    .option("startingOffsets", "latest")\
+    .option("startingOffsets", "earliest")\
     .load()
+
 
 # Define the schema for the JSON data
 json_schema = StructType([
@@ -49,3 +50,13 @@ parsed_df.printSchema()
 
 #هنكمل
 
+# parsed_df.show()
+
+# Display the DataFrame
+query = parsed_df.writeStream\
+    .outputMode("append")\
+    .format("console")\
+    .start()
+
+# Wait for the termination of the query
+query.awaitTermination()
