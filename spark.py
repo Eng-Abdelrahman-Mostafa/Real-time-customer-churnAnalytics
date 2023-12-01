@@ -1,13 +1,12 @@
 import json
 from pyspark.sql import SparkSession
-from pyspark.sql.functions import col, from_json
+from pyspark.sql.functions import col, from_json, when, count, avg
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, BooleanType, FloatType
 
 # Create Spark session
 spark = SparkSession.builder\
-    .master("local[*]")\
-    .appName("CustomerMonthlyCharges")\
-    .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0")\
+    .appName("CustomerChurnAnalysis")\
+    .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.4")\
     .getOrCreate()
 
 # Create Kafka DStream
@@ -16,7 +15,6 @@ kafka_df = spark.readStream.format("kafka")\
     .option("subscribe", "customer-info-topic")\
     .option("startingOffsets", "earliest")\
     .load()
-
 
 # Define the schema for the JSON data
 json_schema = StructType([
@@ -48,15 +46,47 @@ parsed_df = kafka_df.selectExpr("CAST(value AS STRING)")\
 # Display the DataFrame
 parsed_df.printSchema()
 
-#هنكمل
+# Analysis based on demographic factors
+demographic_analysis = parsed_df.groupBy("Age", "Gender", "Location").agg(
+    count(when(col("ChurnStatus.Churned") == True, 1)).alias("ChurnedCustomers"),
+    count(when(col("ChurnStatus.Churned") == False, 1)).alias("NotChurnedCustomers")
+)
 
-# parsed_df.show()
-
-# Display the DataFrame
-query = parsed_df.writeStream\
-    .outputMode("append")\
+# Display demographic analysis
+query_demographic = demographic_analysis.writeStream\
+    .outputMode("complete")\
     .format("console")\
     .start()
 
 # Wait for the termination of the query
-query.awaitTermination()
+query_demographic.awaitTermination()
+
+
+
+# Analysis based on behavior patterns
+behavior_analysis = parsed_df.groupBy("CustomerID").agg(
+    avg(when(col("ChurnStatus.Churned") == True, 1)).alias("AvgChurnFlag")
+)
+
+# Display behavior analysis
+query_behavior = behavior_analysis.writeStream\
+    .outputMode("complete")\
+    .format("console")\
+    .start()
+
+# Wait for the termination of the query
+query_behavior.awaitTermination()
+
+# Analysis based on interactions with the company
+interaction_analysis = parsed_df.groupBy("CustomerID").agg(
+    count(when(col("ServiceUsage.NumCalls") > 0, 1)).alias("NumServiceCalls")
+)
+
+# Display interaction analysis
+query_interaction = interaction_analysis.writeStream\
+    .outputMode("complete")\
+    .format("console")\
+    .start()
+
+# Wait for the termination of the query
+query_interaction.awaitTermination()
