@@ -5,7 +5,7 @@ class MySQLHandler:
     host = 'localhost'
     user='root'
     password=''
-    database='churn_analysis'
+    database='churnAnalytics'
 
     def __init__(self, host=None, user=None, password=None, database=None):
         if host is None:
