@@ -2,7 +2,7 @@ import json
 from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, from_json, when, count, avg
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, BooleanType, FloatType
-from mysql_handler import MySQLHandler as mysql
+from mysql_handler import MySQLHandler
 import mysql.connector
 
 
@@ -62,7 +62,7 @@ demographic_analysis = parsed_df.groupBy("Age", "Gender", "Location").agg(
 # Save demographic analysis to MySQLc
 demographic_analysis.writeStream \
     .outputMode("complete") \
-    .foreachBatch(lambda batch_df, batch_id: mysql.save_to_mysql(batch_df, "demographic_analysis")) \
+    .foreachBatch(lambda batch_df, batch_id: MySQLHandler.save_to_mysql(batch_df, "demographic_analysis")) \
     .start()
 
 # Analysis based on behavior patterns
@@ -73,7 +73,7 @@ behavior_analysis = parsed_df.groupBy("CustomerID").agg(
 # Save behavior analysis to MySQL
 behavior_analysis.writeStream \
     .outputMode("complete") \
-    .foreachBatch(lambda batch_df, batch_id: mysql.save_to_mysql(batch_df, "behavior_analysis")) \
+    .foreachBatch(lambda batch_df, batch_id: MySQLHandler.save_to_mysql(batch_df, "behavior_analysis")) \
     .start()
 
 # Analysis based on interactions with the company
@@ -84,7 +84,7 @@ interaction_analysis = parsed_df.groupBy("CustomerID").agg(
 # Save interaction analysis to MySQL
 interaction_analysis.writeStream \
     .outputMode("complete") \
-    .foreachBatch(lambda batch_df, batch_id: mysql.save_to_mysql(batch_df, "interaction_analysis")) \
+    .foreachBatch(lambda batch_df, batch_id: MySQLHandler.save_to_mysql(batch_df, "interaction_analysis")) \
     .start()
 
 # Wait for the termination of the queries
