@@ -6,7 +6,7 @@ class DataFaker:
     def generate_random_data():
         Churned = random.choice([True, False])
         return {
-            "CustomerID": str(random.randint(1000, 9999)),
+            "CustomerID": str(random.randint(1000, 1200)),
             "Age": random.randint(18, 60),
             "Gender": random.choice(["Male", "Female"]),
             "Location": random.choice(["CityA", "CityB", "CityC"]),
