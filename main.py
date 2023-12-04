@@ -3,7 +3,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql.functions import col, from_json, when, count, avg
 from pyspark.sql.types import StructType, StructField, StringType, IntegerType, BooleanType, FloatType
 from mysql_handler import MySQLHandler as mysql
-
+import mysql.connector
 
 
 # Create Spark session
