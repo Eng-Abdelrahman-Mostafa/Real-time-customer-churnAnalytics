@@ -24,6 +24,9 @@ spark = SparkSession.builder\
     .config("spark.jars", "C:\spark\jars\mysql-connector-j-8.2.0.jar") \
     .getOrCreate()
 
+    # .config("spark.driver.extraClassPath", "D:\DATA\spark-3.2.4\jars\mysql-connector-j-8.2.0.jar") \
+    # .config("spark.executor.extraClassPath", "D:\DATA\spark-3.2.4\jars\mysql-connector-j-8.2.0.jar") \
+
 # Create Kafka DStream
 kafka_df = spark.readStream.format("kafka")\
     .option("kafka.bootstrap.servers", "localhost:9092")\
