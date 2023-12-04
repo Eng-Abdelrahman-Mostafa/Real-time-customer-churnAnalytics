@@ -21,6 +21,7 @@ def save_to_mysql(dataframe, table_name):
 spark = SparkSession.builder\
     .appName("CustomerChurnAnalysis")\
     .config("spark.jars.packages", "org.apache.spark:spark-sql-kafka-0-10_2.12:3.2.4")\
+    .config("spark.jars", "C:\spark\jars\mysql-connector-j-8.2.0.jar") \
     .getOrCreate()
 
 # Create Kafka DStream
