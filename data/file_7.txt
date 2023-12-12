@@ -1,0 +1,1 @@
+{"CustomerID": "1123", "Age": 54, "Gender": "Female", "Location": "CityA", "ServiceUsage": {"Duration": 56, "NumCalls": 140, "NumMessages": 15, "DataUsage": 2.86}, "BillingInfo": {"MonthlyCharges": 51.06, "PaymentMethod": "BankTransfer"}, "ChurnStatus": {"Churned": false, "ChurnDate": ""}}

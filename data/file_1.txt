@@ -1,0 +1,1 @@
+{"CustomerID": "1072", "Age": 20, "Gender": "Female", "Location": "CityA", "ServiceUsage": {"Duration": 91, "NumCalls": 68, "NumMessages": 14, "DataUsage": 4.11}, "BillingInfo": {"MonthlyCharges": 64.63, "PaymentMethod": "PayPal"}, "ChurnStatus": {"Churned": true, "ChurnDate": "9-11-2023"}}

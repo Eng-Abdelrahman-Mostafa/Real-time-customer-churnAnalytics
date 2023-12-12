@@ -50,15 +50,11 @@ parsed_df = kafka_df.selectExpr("CAST(value AS STRING)")\
     .select(from_json("value", json_schema).alias("data"))\
     .select("data.*")
 
-# Create an instance of the MySQLHandler class
-
-
 # Analysis based on demographic factors
 demographic_analysis = parsed_df.groupBy("Age", "Gender", "Location").agg(
     count(when(col("ChurnStatus.Churned") == True, 1)).alias("ChurnedCustomers"),
     count(when(col("ChurnStatus.Churned") == False, 1)).alias("NotChurnedCustomers")
 )
-
 # Save demographic analysis to MySQLc
 demographic_analysis.writeStream \
     .outputMode("complete") \
